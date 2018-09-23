@@ -1,0 +1,64 @@
+//八皇后问题
+#include <stdio.h>
+#include <stdlib.h>
+#define N 8
+
+int column[N+1];//同栏是否有皇后
+int rup[2*N+1];//右上至左下是否有皇后     +1的目的是让数组从1开始到2N
+int lup[2*N+1];//左上至右下是否有皇后
+int queen[N+1] = {0};
+int num ;//解答编号
+
+void backtrack(int);//递回求解
+
+main(void)
+{
+    int i;
+    num = 0;
+    for(i=1;i<=N;i++)               //让每一列的值都初始化为“1”
+        column[i] = 1;
+    
+    for(i=1;i<=2*N;i++)             //让每个正反斜线的值都初始化为“1”
+        rup[i] = lup[i] = 1;
+    
+    backtrack(1);
+    
+    system("pause");
+    return 0;
+}
+
+void showAnswer()
+{
+    int x,y;
+    printf("\n 解答 %d\n",++num);
+    for (y=1;y<=N;y++)
+    {
+        for (x=1;x<=N;x++)
+        {
+            if(queen[y] == x)
+                printf("Q");
+            else
+                printf("K");
+        }
+        printf("\n");
+    }
+}
+
+void backtrack(int i)       //递归棋盘最下一层即可
+{
+    int j;
+    if(i > N)
+        showAnswer();
+    else
+        for (j=1;j<=N;j++)
+        {
+            if(column[j] == 1 && rup[i+j] == 1 &&lup[i-j+N] == 1){          //当这一格所在的列和其正反斜线都没有被占的时候
+                queen[i] = j;       //若满足以上放置皇后的条件，就让queen数组的值就等于列的下标
+                //设定为占用
+                column[j] = rup[i+j] = lup[i-j+N] = 0;
+                backtrack(i+1);   //当i>8的时候就不行进行回溯重置了
+                column[j] = rup[i+j] = lup[i-j+N] = 1; //对前面设置的位置进行重新规划
+            }
+        }
+}
+
