@@ -1,0 +1,52 @@
+#include<stdio.h>
+#define MAX 100  
+#define large_number 10000
+int Hash[large_number];
+
+struct  
+{
+    int Stack[MAX];
+    int top;
+} stack;
+
+
+void init(stack* s)
+{
+    s->top=-1;   
+}
+//search the element k 
+int  search(int* hash,stack* s,int value)
+{
+    int num=hash[value];
+    if(num>0&&num<=s->top&&s.Stack[num]==value)
+        return num;
+    return 0;    
+}
+
+
+void insert(int* hash,stack* s,int x)   
+{
+    if(search(hash,s,x)!=0)
+    {
+        printf("already exist\n");
+       return ;
+     }
+     s->top++;
+     s.Stack[s->top]=value;
+    hash[value]=s->top;
+}
+
+void delete(int* hash,stack* s,int value)   
+{
+    int num=search(hash,s,value);
+    if(num)
+    {
+        int val=s->Stack[s->top];
+        s->Stack[num]=val;
+        s->top--;
+        hash[val]=num;
+        printf("delete successfully\n");
+    }
+    else
+        printf("delete failed\n");
+}
